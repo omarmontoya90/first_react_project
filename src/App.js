@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <div className="App">
        <h1>Hello, I am a React application</h1>
-       // The bind is an option to send parameters to arrow function
+       The bind is an option to send parameters to arrow function
        <button onClick={this.switchNameHandler.bind(this, "Renault")}>Random Data</button>
 
        <Person
