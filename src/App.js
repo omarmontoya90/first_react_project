@@ -9,6 +9,11 @@ class App extends Component {
       { name:"Leonardo", age:"23"},
       { name:"Montoya", age:"23"}
     ],
+    personsB: [
+      { name:"Omar", age:"30"},
+      { name:"Leonardo", age:"23"},
+      { name:"Montoya", age:"23"}
+    ],
     otherSatet: "some value"
   }
 
@@ -32,31 +37,47 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.personsB;
+    persons.splice(personIndex, 1);
+    this.setState({personsB: persons});
+  }
+
   render() {
     return (
       <div className="App">
-       <h1>Hello, I am a React application</h1>
-       The bind is an option to send parameters to arrow function
-       <button onClick={this.switchNameHandler.bind(this, "Renault")}>Random Data</button>
+        <h1>Hello, I am a React application</h1>
+        The bind is an option to send parameters to arrow function
+        <button onClick={this.switchNameHandler.bind(this, "Renault")}>Random Data</button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+          // The arrow function is other option to send parameters to arrow function
+          //It's a little inefficient, it may affect performance
+          changeName={()=>this.switchNameHandler("Homer")}/> 
 
-       <Person
-         name={this.state.persons[0].name}
-         age={this.state.persons[0].age}
-         // The arrow function is other option to send parameters to arrow function
-         //It's a little inefficient, it may affect performance
-         changeName={()=>this.switchNameHandler("Homer")}/> 
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+          changeName={this.switchNameHandler.bind(this, "Renault")}> Hobbie: Develop</Person>
 
-       <Person
-         name={this.state.persons[1].name}
-         age={this.state.persons[1].age}
-         changeName={this.switchNameHandler.bind(this, "Renault")}> Hobbie: Develop</Person>
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}
+          changeName={this.switchNameHandler.bind(this, "Enzo")}
+          inputChangedName={this.nameChangedHandler}/>
 
-       <Person
-         name={this.state.persons[2].name}
-         age={this.state.persons[2].age}
-         changeName={this.switchNameHandler.bind(this, "Enzo")}
-         inputChangedName={this.nameChangedHandler}/>
+        <h1>This is a refactor of old code</h1>
+        <div>
+          {this.state.personsB.map((person,index)=> {
+            return <Person
+              name={person.name}
+              age={person.age}
+              click={this.deletePersonHandler.bind(this, index)}/>
+          })}
+        </div>
       </div>
+
     );
   }
 }
